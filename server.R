@@ -43,8 +43,8 @@ shinyServer(function(input, output,session) {
 
     inFile <- input$MegaDB$datapath  #User input -- Get the Access database pathname
 
-    if (is.null(inFile))
-      return(NULL)
+   # if (is.null(inFile))
+  #    return(NULL)
     DB <- paste("Driver={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=", inFile)
     myconn <- odbcDriverConnect(DB)
     strat <- sqlFetch(myconn, "strata")
