@@ -99,8 +99,6 @@ GIS <- reactive(input$WMU_Shp)
   
   output$myplot <- renderPlot({
 
-     DistanceInput2 <- getDSM(
-
 
     model1 <- ddf(method="ds", data=GetDSM(datasheet.MOOS.1), dsmodel = ~cds(key="hn"), meta.data=list(width=425))
     ddf.1.moos <- ds(GetDSM(datasheet.MOOS.1), key="hn", adjustment = "cos", truncation = 425)
