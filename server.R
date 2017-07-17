@@ -94,12 +94,18 @@ shinyServer(function(input, output,session) {
     SppOutput <- unique(DistanceInput2)
     })
      
+                                     
+    ###########################################################
+    ###########################################################
+    ### Plot DF of the moose observations
+    ###########################################################
+    ###########################################################                                   
   
   output$myplot <- renderPlot({
 
 
-    model1 <- ddf(method="ds", data=GetDSM(datasheet.MOOS.1), dsmodel = ~cds(key="hn"), meta.data=list(width=425))
-    ddf.1.moos <- ds(GetDSM(datasheet.MOOS.1), key="hn", adjustment = "cos", truncation = 425)
+    model1 <- ddf(method="ds", data=GetDSM(datasheet.MOOS.1, "MOOS"), dsmodel = ~cds(key="hn"), meta.data=list(width=425))
+    ddf.1.moos <- ds(GetDSM(datasheet.MOOS.1, "MOOS"), key="hn", adjustment = "cos", truncation = 425)
 
 
 
