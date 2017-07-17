@@ -84,13 +84,13 @@ shinyServer(function(input, output,session) {
   
   
   getDSM <- function(SppTable, SPCD){(
-    DistancePreInput.X <- anti_join(transflown, SppTable, by=c("Transect.ID","Stratum")),
-    DistancePreInput.X <- unique(DistancePreInput.X),
-    DistancePreInput.X.2 <- merge(SppTable, DistancePreInput.X, all=T),
-    DistancePreInput.X.2 <- unique(DistancePreInput.X),
-    DistanceInput.MOOS <- as.data.frame(cbind(object.ID = as.numeric(DistancePreInput.X.2$ID), Region.Label= DistancePreInput.X.2$Stratum,Area = as.numeric(DistancePreInput.X.2$Stratum.Area), TID = as.numeric(DistancePreInput.X.2$Transect.ID), TLENGTH = as.numeric(DistancePreInput.X.2$Transect.Length), Effort=as.numeric(DistancePreInput.X.2$Length)/1000, distance= as.numeric(DistancePreInput.X.2$DistancePerp), size=as.numeric(DistancePreInput.X.2$[, SPCD].GroupSize),CC=as.factor(DistancePreInput.X.2$Covariate.1), Activity=as.factor(DistancePreInput.X.2$Covariate.2))),
-    DistanceInput.MOOS <- DistanceInput[ order(DistanceInput.MOOS$Region.Label, DistanceInput.MOOS$TID, DistanceInput.MOOS$size), ],
-    DistanceInput2 <- as.data.frame(cbind(object = as.numeric(DistancePreInput.MOOS$ID), Region.Label= DistancePreInput.MOOS$Stratum,Area = as.numeric(DistancePreInput.MOOS$Stratum.Area), Sample.Label = as.numeric(DistancePreInput.MOOS$Transect.ID), Effort = as.numeric(DistancePreInput.MOOS$Transect.Length), distance= as.numeric(DistancePreInput.MOOS$DistancePerp), size=as.numeric(DistancePreInput.MOOS$[, SPCD].GroupSize),CC=as.factor(DistancePreInput.MOOS$Covariate.1), Activity=as.factor(DistancePreInput.MOOS$Covariate.2))),
+    DistancePreInput.X <- anti_join(transflown, SppTable, by=c("Transect.ID","Stratum"))
+    DistancePreInput.X <- unique(DistancePreInput.X)
+    DistancePreInput.X.2 <- merge(SppTable, DistancePreInput.X, all=T)
+    DistancePreInput.X.2 <- unique(DistancePreInput.X)
+    DistanceInput.MOOS <- as.data.frame(cbind(object.ID = as.numeric(DistancePreInput.X.2$ID), Region.Label= DistancePreInput.X.2$Stratum,Area = as.numeric(DistancePreInput.X.2$Stratum.Area), TID = as.numeric(DistancePreInput.X.2$Transect.ID), TLENGTH = as.numeric(DistancePreInput.X.2$Transect.Length), Effort=as.numeric(DistancePreInput.X.2$Length)/1000, distance= as.numeric(DistancePreInput.X.2$DistancePerp), size=as.numeric(DistancePreInput.X.2$[, SPCD].GroupSize),CC=as.factor(DistancePreInput.X.2$Covariate.1), Activity=as.factor(DistancePreInput.X.2$Covariate.2)))
+    DistanceInput.MOOS <- DistanceInput[ order(DistanceInput.MOOS$Region.Label, DistanceInput.MOOS$TID, DistanceInput.MOOS$size), ]
+    DistanceInput2 <- as.data.frame(cbind(object = as.numeric(DistancePreInput.MOOS$ID), Region.Label= DistancePreInput.MOOS$Stratum,Area = as.numeric(DistancePreInput.MOOS$Stratum.Area), Sample.Label = as.numeric(DistancePreInput.MOOS$Transect.ID), Effort = as.numeric(DistancePreInput.MOOS$Transect.Length), distance= as.numeric(DistancePreInput.MOOS$DistancePerp), size=as.numeric(DistancePreInput.MOOS$[, SPCD].GroupSize),CC=as.factor(DistancePreInput.MOOS$Covariate.1), Activity=as.factor(DistancePreInput.MOOS$Covariate.2)))
     SppOutput <- unique(DistanceInput2)
     })
      
@@ -188,18 +188,18 @@ shinyServer(function(input, output,session) {
 
       #Handle the file names such that Shiny doesn't get confused with shapefiles
 
-GetShapefile <- function(InShapefile, OutShapefile){
-    if (is.null(InShapefile)) 
-        return(NULL)  
-    dir<-dirname(InShapefile[1,4])
-      print(paste("Directory name:",dir))
-    for ( i in 1:nrow(InShapefile)) {
-    file.rename(InShapefile[i,4], paste0(dir,"/",InShapefile[i,1]))}
-    OutShapefile <- grep(list.files(dir, pattern="*.shp", full.names=TRUE), pattern="*.xml", inv=T, value=T)
-     }
-      
-      
-     
+      GetShapefile <- function(InShapefile, OutShapefile){
+          if (is.null(InShapefile)) 
+              return(NULL)  
+          dir<-dirname(InShapefile[1,4])
+            print(paste("Directory name:",dir))
+          for ( i in 1:nrow(InShapefile)) {
+          file.rename(InShapefile[i,4], paste0(dir,"/",InShapefile[i,1]))}
+          OutShapefile <- grep(list.files(dir, pattern="*.shp", full.names=TRUE), pattern="*.xml", inv=T, value=T)
+           }
+    
+    
+    
       
     survey.area359.TTM <- readOGR(GetShapefile(input$WMU_Shp), substr(basename(GetShapefile(input$WMU_Shp)),1,nchar(basename(GetShapefile(input$WMU_Shp)))-4))
     #survey.area359.TTM <- readOGR(GetShapefile(input$WMU_Shp), substr(basename(GetShapefile(input$WMU_Shp)),1,nchar(basename(GetShapefile(input$WMU_Shp)))-4))
