@@ -113,7 +113,22 @@ shinyServer(function(input, output,session) {
 
    })
 
+  ###########################################################
+    ###########################################################
+    ### Plot mule deer detection function
+    ###########################################################
+    ###########################################################    
+    output$myplot3 <- renderPlot({
+ 
 
+    model2 <- ddf(method="ds", data=GETDSM(datasheet.MUDE.1, "MUDE"), dsmodel = ~cds(key="hn"), meta.data=list(width=425))
+    ddf.1.mude <- ds(GETDSM(datasheet.MUDE.1, "MUDE"), key="hn", adjustment = "cos", truncation = 425)
+
+    plot(ddf.1.mude, main=("Global detection function for mule deer, HN-Cos, no truncation"))
+        
+        
+        })
+ 
     ###########################################################
     ###########################################################
     ### Plot a map of the moose observations
@@ -236,73 +251,7 @@ GetShapefile <- function(InShapefile, OutShapefile){
     
     
     
-    ###########################################################
-    ###########################################################
-    ### Plot mule deer detection function
-    ###########################################################
-    ###########################################################    
-    output$myplot3 <- renderPlot({
-             inFile <- DB() #input$MegaDB$datapath  #User input -- Get the Access database pathname
-     # print(inFile)
-    if (is.null(inFile))
-      return(NULL)
-    DB <- paste("Driver={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=",inFile)
-    myconn <- odbcDriverConnect(DB)
-    strat <- sqlFetch(myconn, "strata")
-    strat_num <- nrow(strat)
-    results_num_index <- as.integer(strat_num) + 1
-
-    datasheet <- as.data.frame(sqlQuery(myconn, "select * from datasheet"))
-
-    names(datasheet) <- sub(" ", ".", names(datasheet))
-    names(datasheet) <- sub(" ", ".", names(datasheet))
-    names(datasheet) <- sub("/", "", names(datasheet))
-    names(datasheet) <- sub("/", "", names(datasheet))
-
-
-
-    transflown <- datasheet[!duplicated(datasheet[, c("Transect.ID", "Stratum")]), ]
-    transflown <- transflown[!is.na(transflown$Stratum),]
-    transflown$DistancePerp <- " "
-    transflown$MUDE.GroupSize <- " "
-    transflown$Covariate.1 <- " "
-    transflown$Covariate.2 <- " "
-    transflown <- unique(transflown)
-
-
-    datasheet.2 <- datasheet[ which(datasheet$MUDE.GroupSize >0),]
-    datasheet.2 <- unique(datasheet.2)
-
-
-    DistancePreInput.MUDE.2 <- anti_join(transflown, datasheet.2, by=c("Transect.ID","Stratum"))
-    DistancePreInput.MUDE.2 <- unique(DistancePreInput.MUDE.2)
-
-
-    DistancePreInput.MUDE <- merge(datasheet.2, DistancePreInput.MUDE.2, all=T)
-    DistancePreInput.MUDE <- unique(DistancePreInput.MUDE)
-
-
-    DistanceInput<- as.data.frame(cbind(object.ID = as.numeric(DistancePreInput.MUDE$ID), Region.Label= DistancePreInput.MUDE$Stratum,Area = as.numeric(DistancePreInput.MUDE$Stratum.Area), TID = as.numeric(DistancePreInput.MUDE$Transect.ID), TLENGTH = as.numeric(DistancePreInput.MUDE$Transect.Length), Effort=as.numeric(DistancePreInput.MUDE$Length)/1000, distance= as.numeric(DistancePreInput.MUDE$DistancePerp), size=as.numeric(DistancePreInput.MUDE$MUDE.GroupSize),CC=as.factor(DistancePreInput.MUDE$Covariate.1), Activity=as.factor(DistancePreInput.MUDE$Covariate.2)))
-
-    DistanceInput <- DistanceInput[ order(DistanceInput$Region.Label, DistanceInput$TID, DistanceInput$size), ]
-
-
-    close(myconn)
-    
-
-    DistanceInput2 <- as.data.frame(cbind(object = as.numeric(DistancePreInput.MUDE$ID), Region.Label= DistancePreInput.MUDE$Stratum,Area = as.numeric(DistancePreInput.MUDE$Stratum.Area), Sample.Label = as.numeric(DistancePreInput.MUDE$Transect.ID), Effort = as.numeric(DistancePreInput.MUDE$Transect.Length), distance= as.numeric(DistancePreInput.MUDE$DistancePerp), size=as.numeric(DistancePreInput.MUDE$MUDE.GroupSize),CC=as.factor(DistancePreInput.MUDE$Covariate.1), Activity=as.factor(DistancePreInput.MUDE$Covariate.2)))
-
-    DistanceInput2 <- unique(DistanceInput2)
-
-
-    model2 <- ddf(method="ds", data=DistanceInput2, dsmodel = ~cds(key="hn"), meta.data=list(width=425))
-    ddf.1.mude <- ds(DistanceInput2, key="hn", adjustment = "cos", truncation = 425)
-
-    plot(ddf.1.mude, main=("Global detection function for mule deer, HN-Cos, no truncation"))
-        
-        
-        })
- 
+  
 #####################################################################
 #MUDE Map
 #####################################################################   
