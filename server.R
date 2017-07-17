@@ -14,25 +14,7 @@ packages <- c("shiny", "RODBC","dplyr","Distance",
   "rgeos","dsm","knitr","maptools","gridExtra")
 
 ipak(packages)
-
-
-ui <- fluidPage(
-    verbatimTextOutput(("debug"))
-)
-
-shinyServer(function(input, output,session) {
-
-    
-    ###########################################################
-    ###########################################################
-    ### Create the general moose detection function
-    ###########################################################
-    ###########################################################
-  output$debug <- renderPrint({
-    sessionInfo()
-  })
-
-      #Prepare the user-input slots -- dynamic/reactive
+     #Prepare the user-input slots -- dynamic/reactive
       DB <- reactive(input$MegaDB$datapath)
       GIS <- reactive(input$WMU_Shp)
 
@@ -93,6 +75,24 @@ shinyServer(function(input, output,session) {
     DistanceInput2 <- as.data.frame(cbind(object = as.numeric(DistancePreInput.MOOS$ID), Region.Label= DistancePreInput.MOOS$Stratum,Area = as.numeric(DistancePreInput.MOOS$Stratum.Area), Sample.Label = as.numeric(DistancePreInput.MOOS$Transect.ID), Effort = as.numeric(DistancePreInput.MOOS$Transect.Length), distance= as.numeric(DistancePreInput.MOOS$DistancePerp), size=as.numeric(DistancePreInput.MOOS$[, SPCD].GroupSize),CC=as.factor(DistancePreInput.MOOS$Covariate.1), Activity=as.factor(DistancePreInput.MOOS$Covariate.2))),
     SppOutput <- unique(DistanceInput2)
     })
+
+ui <- fluidPage(
+    verbatimTextOutput(("debug"))
+)
+
+shinyServer(function(input, output,session) {
+
+    
+    ###########################################################
+    ###########################################################
+    ### Create the general moose detection function
+    ###########################################################
+    ###########################################################
+  output$debug <- renderPrint({
+    sessionInfo()
+  })
+
+ 
      
                                      
     ###########################################################
