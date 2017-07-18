@@ -65,7 +65,7 @@ ipak(packages)
     datasheet.WAPT.1 <- unique(datasheet.WAPT.1)
   
   
-  getDSM <- function(SppTable, SPCD){(
+  getDSM <- function(SppTable, SPCD){
     DistancePreInput.X <- anti_join(transflown, SppTable, by=c("Transect.ID","Stratum"))
     DistancePreInput.X <- unique(DistancePreInput.X)
     DistancePreInput.X.2 <- merge(SppTable, DistancePreInput.X, all=T)
@@ -74,7 +74,7 @@ ipak(packages)
     DistanceInput.MOOS <- DistanceInput[ order(DistanceInput.MOOS$Region.Label, DistanceInput.MOOS$TID, DistanceInput.MOOS$size), ]
     DistanceInput2 <- as.data.frame(cbind(object = as.numeric(DistancePreInput.MOOS$ID), Region.Label= DistancePreInput.MOOS$Stratum,Area = as.numeric(DistancePreInput.MOOS$Stratum.Area), Sample.Label = as.numeric(DistancePreInput.MOOS$Transect.ID), Effort = as.numeric(DistancePreInput.MOOS$Transect.Length), distance= as.numeric(DistancePreInput.MOOS$DistancePerp), size=as.numeric(DistancePreInput.MOOS$[, SPCD].GroupSize),CC=as.factor(DistancePreInput.MOOS$Covariate.1), Activity=as.factor(DistancePreInput.MOOS$Covariate.2)))
     SppOutput <- unique(DistanceInput2)
-    })
+    }
 
 ui <- fluidPage(
     verbatimTextOutput(("debug"))
