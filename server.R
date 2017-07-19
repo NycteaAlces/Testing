@@ -15,10 +15,6 @@ packages <- c("shiny", "RODBC","dplyr","Distance",
 
 ipak(packages)
      #Prepare the user-input slots -- dynamic/reactive
-      DB <- reactive(input$MegaDB$datapath)
-      GIS <- reactive(input$WMU_Shp)
-
-
 
 ui <- fluidPage(
     verbatimTextOutput(("debug"))
@@ -32,7 +28,7 @@ shinyServer(function(input, output,session) {
     sessionInfo()
   })
 
-# getDSM <- function(SppTable, SPCD){
+getDSM <- function(SppTable, SPCD){
   # input$file1 will be NULL initially. After the user selects and uploads a
     # file, it will be a data frame with 'name', 'size', 'type', and 'datapath'
     # columns. The 'datapath' column will contain the local filenames where the
@@ -87,7 +83,7 @@ shinyServer(function(input, output,session) {
     DistanceInput2 <- as.data.frame(cbind(object = as.numeric(DistancePreInput.MOOS$ID), Region.Label= DistancePreInput.MOOS$Stratum,Area = as.numeric(DistancePreInput.MOOS$Stratum.Area), Sample.Label = as.numeric(DistancePreInput.MOOS$Transect.ID), Effort = as.numeric(DistancePreInput.MOOS$Transect.Length), distance= as.numeric(DistancePreInput.MOOS$DistancePerp), size=as.numeric(DistancePreInput.MOOS[[paste(SPCD, ".GroupSize")]]),CC=as.factor(DistancePreInput.MOOS$Covariate.1), Activity=as.factor(DistancePreInput.MOOS$Covariate.2)))
     unique(DistanceInput2) #return the table as an object
    
- # }
+}
 
      
                                      
