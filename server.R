@@ -25,7 +25,7 @@ ipak(packages)
     # columns. The 'datapath' column will contain the local filenames where the
     # data can be found.
 
-    inFile <- reactive(input$MegaDB$datapath)  #User input -- Get the Access database pathname
+    inFile <- DB  #User input -- Get the Access database pathname
 
     DB <- paste("Driver={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=", inFile)
     myconn <- odbcDriverConnect(DB)
