@@ -72,8 +72,8 @@ ipak(packages)
     DistanceInput.MOOS <- as.data.frame(cbind(object.ID = as.numeric(DistancePreInput.X.2$ID), Region.Label= DistancePreInput.X.2$Stratum,Area = as.numeric(DistancePreInput.X.2$Stratum.Area), TID = as.numeric(DistancePreInput.X.2$Transect.ID), TLENGTH = as.numeric(DistancePreInput.X.2$Transect.Length), Effort=as.numeric(DistancePreInput.X.2$Length)/1000, distance= as.numeric(DistancePreInput.X.2$DistancePerp), size=as.numeric(DistancePreInput.X.2[[paste(SPCD, ".GroupSize")]]),CC=as.factor(DistancePreInput.X.2$Covariate.1), Activity=as.factor(DistancePreInput.X.2$Covariate.2)))
     DistanceInput.MOOS <- DistanceInput[ order(DistanceInput.MOOS$Region.Label, DistanceInput.MOOS$TID, DistanceInput.MOOS$size), ]
     DistanceInput2 <- as.data.frame(cbind(object = as.numeric(DistancePreInput.MOOS$ID), Region.Label= DistancePreInput.MOOS$Stratum,Area = as.numeric(DistancePreInput.MOOS$Stratum.Area), Sample.Label = as.numeric(DistancePreInput.MOOS$Transect.ID), Effort = as.numeric(DistancePreInput.MOOS$Transect.Length), distance= as.numeric(DistancePreInput.MOOS$DistancePerp), size=as.numeric(DistancePreInput.MOOS[[paste(SPCD, ".GroupSize")]]),CC=as.factor(DistancePreInput.MOOS$Covariate.1), Activity=as.factor(DistancePreInput.MOOS$Covariate.2)))
-    SppOutput <- unique(DistanceInput2)
-    return(sppOutput)
+    unique(DistanceInput2) #return the table as an object
+   
     }
 
 ui <- fluidPage(
