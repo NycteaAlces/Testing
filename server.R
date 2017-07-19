@@ -73,6 +73,7 @@ ipak(packages)
     DistanceInput.MOOS <- DistanceInput[ order(DistanceInput.MOOS$Region.Label, DistanceInput.MOOS$TID, DistanceInput.MOOS$size), ]
     DistanceInput2 <- as.data.frame(cbind(object = as.numeric(DistancePreInput.MOOS$ID), Region.Label= DistancePreInput.MOOS$Stratum,Area = as.numeric(DistancePreInput.MOOS$Stratum.Area), Sample.Label = as.numeric(DistancePreInput.MOOS$Transect.ID), Effort = as.numeric(DistancePreInput.MOOS$Transect.Length), distance= as.numeric(DistancePreInput.MOOS$DistancePerp), size=as.numeric(DistancePreInput.MOOS[[paste(SPCD, ".GroupSize")]]),CC=as.factor(DistancePreInput.MOOS$Covariate.1), Activity=as.factor(DistancePreInput.MOOS$Covariate.2)))
     SppOutput <- unique(DistanceInput2)
+    return(sppOutput)
     }
 
 ui <- fluidPage(
