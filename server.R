@@ -130,7 +130,7 @@ model1 <- ddf(method="ds", data=GetDSM(datasheet.MOOS.1, "MOOS"), dsmodel = ~cds
 
   output$myplot2 <- renderPlot({
     
-      inFile <- DB() #input$MegaDB$datapath  #User input -- Get the Access database pathname
+      inFile <- input$MegaDB$datapath #DB() #input$MegaDB$datapath  #User input -- Get the Access database pathname
      # print(inFile)
     if (is.null(inFile))
       return(NULL)
