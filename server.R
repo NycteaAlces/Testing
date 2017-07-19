@@ -19,13 +19,13 @@ ipak(packages)
       GIS <- reactive(input$WMU_Shp)
 
 
-  getDSM <- reactivefunction(SppTable, SPCD){
+  getDSM <- function(SppTable, SPCD){
   # input$file1 will be NULL initially. After the user selects and uploads a
     # file, it will be a data frame with 'name', 'size', 'type', and 'datapath'
     # columns. The 'datapath' column will contain the local filenames where the
     # data can be found.
 
-    inFile <- input$MegaDB$datapath  #User input -- Get the Access database pathname
+    inFile <- reactive(input$MegaDB$datapath)  #User input -- Get the Access database pathname
 
     DB <- paste("Driver={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=", inFile)
     myconn <- odbcDriverConnect(DB)
