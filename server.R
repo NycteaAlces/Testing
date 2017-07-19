@@ -75,7 +75,7 @@ ipak(packages)
     unique(DistanceInput2) #return the table as an object
    
     }
-
+debug(GetDSM)
 ui <- fluidPage(
     verbatimTextOutput(("debug"))
 )
